@@ -1,0 +1,5 @@
+{
+  "name": "Sales Enablement Hero Animated Tile",
+  "description": "An animated, interactive tile component extracted from a SaaS landing page, showcasing sales enablement metrics. Built with React, TypeScript, Tailwind CSS, and Framer Motion.",
+  "requestFramePermissions": []
+}
