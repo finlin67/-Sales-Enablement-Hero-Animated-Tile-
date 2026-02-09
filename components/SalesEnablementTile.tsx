@@ -102,7 +102,7 @@ export default function SalesEnablementTile() {
 
                     {/* Stacked Secondary Cards (Vertical List) */}
                     <div className="flex flex-col gap-3 mt-4">
-                        {/* Card 1: Sales Cycle */}
+                        {/* Card 1: Sales Cycle (Dial Variant) */}
                         <div className="group bg-slate-800/30 border border-white/5 hover:border-white/10 rounded-xl p-3 flex items-center justify-between transition-all hover:bg-slate-800/50">
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 group-hover:text-indigo-300 transition-colors">
@@ -113,20 +113,34 @@ export default function SalesEnablementTile() {
                                     <span className="text-white text-sm font-bold">-{stats.salesCycle.toFixed(1)}% Redux</span>
                                 </div>
                             </div>
-                            <div className="flex flex-col items-end w-24">
-                                <div className="w-full bg-slate-700/50 h-1.5 rounded-full overflow-hidden">
-                                    <motion.div 
-                                        className="h-full bg-indigo-500" 
-                                        initial={{ width: "0%" }}
-                                        animate={{ width: "72%" }}
-                                        transition={{ duration: 1.5 }}
-                                    />
+                            {/* Radial Dial */}
+                            <div className="flex items-center gap-3">
+                                <div className="flex flex-col items-end">
+                                     <span className="text-[9px] text-slate-500 font-mono">TARGET</span>
+                                     <span className="text-[9px] text-slate-400 font-mono font-bold">-30%</span>
                                 </div>
-                                <span className="text-[9px] text-slate-500 mt-1 font-mono">TARGET: -30%</span>
+                                <div className="relative w-10 h-10 flex items-center justify-center">
+                                    <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="14" fill="none" stroke="#1e293b" strokeWidth="3" />
+                                        <motion.circle
+                                            cx="18"
+                                            cy="18"
+                                            r="14"
+                                            fill="none"
+                                            stroke="#6366f1"
+                                            strokeWidth="3"
+                                            strokeLinecap="round"
+                                            strokeDasharray={88} // 2 * PI * 14
+                                            initial={{ strokeDashoffset: 88 }}
+                                            animate={{ strokeDashoffset: 88 * (1 - (stats.salesCycle / 40)) }} // Scales to max 40% reduction
+                                            transition={{ duration: 1.5, ease: "easeOut" }}
+                                        />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Card 2: Velocity */}
+                        {/* Card 2: Velocity (Linear Bar Variant) */}
                         <div className="group bg-slate-800/30 border border-white/5 hover:border-white/10 rounded-xl p-3 flex items-center justify-between transition-all hover:bg-slate-800/50">
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-400 group-hover:text-pink-300 transition-colors">
@@ -142,7 +156,7 @@ export default function SalesEnablementTile() {
                                     <motion.div 
                                         className="h-full bg-pink-500" 
                                         initial={{ width: "0%" }}
-                                        animate={{ width: "85%" }}
+                                        animate={{ width: `${Math.min((stats.velocity / 60) * 100, 100)}%` }} // Dynamic width
                                         transition={{ duration: 1.5 }}
                                     />
                                 </div>
